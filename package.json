@@ -1,0 +1,36 @@
+{
+  "author": "Phạm Trung Kiên",
+  "description": "My favorite config for eslint",
+  "files": [
+    "eslint*.js",
+    "index.js",
+    "LICENSE",
+    "README.md"
+  ],
+  "homepage": "https://github.com/shhlkien/eslint-config-pk",
+  "keywords": [
+    "eslint",
+    "eslintconfig",
+    "format",
+    "hint",
+    "javascript",
+    "js",
+    "jshint",
+    "lint",
+    "style"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "eslint-config-pk",
+  "repository": "https://github.com/shhlkien/eslint-config-pk",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "eslint": ">=7.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.9.0"
+  },
+  "scripts": {
+    "lint": "eslint -c eslint.js ."
+  }
+}

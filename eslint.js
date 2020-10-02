@@ -116,7 +116,7 @@ module.exports = {
     'sort-imports': [
       'error',
       {
-        'allowSeparatedGroups': false,
+        'allowSeparatedGroups': true,
         'ignoreCase': true,
         'ignoreDeclarationSort': false,
         'ignoreMemberSort': false,

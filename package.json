@@ -23,7 +23,7 @@
   "main": "index.js",
   "name": "eslint-config-pk",
   "repository": "https://github.com/shhlkien/eslint-config-pk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "peerDependencies": {
     "eslint": ">=7.0.0"
   },

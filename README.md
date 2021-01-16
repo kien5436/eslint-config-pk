@@ -11,8 +11,13 @@ yarn add -D eslint eslint-config-pk
 ## Usage
 Extends this config as instructed in [Eslint Configuration](http://eslint.org/docs/user-guide/configuring)
 ```json
+// node
 {
   "extends": "pk"
+}
+// browser
+{
+  "extends": "pk/eslint-browser"
 }
 ```
 

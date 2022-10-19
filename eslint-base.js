@@ -110,17 +110,10 @@ module.exports = {
       {
         'allowSeparatedGroups': true,
         'ignoreCase': true,
-        'ignoreDeclarationSort': false,
+        'ignoreDeclarationSort': true,
         'ignoreMemberSort': false,
-        'memberSyntaxSortOrder': [
-          'none',
-          'all',
-          'multiple',
-          'single',
-        ],
       },
     ],
-    'sort-keys': 'error',
     'space-before-blocks': [
       'error',
       'always',

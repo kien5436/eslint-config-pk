@@ -38,7 +38,6 @@ module.exports = {
       'error',
       'never',
     ],
-    'eqeqeq': 'warn',
     'func-call-spacing': [
       'error',
       'never',
@@ -51,7 +50,6 @@ module.exports = {
     'key-spacing': 'error',
     'lines-between-class-members': 'error',
     'newline-per-chained-call': 'warn',
-    'no-await-in-loop': 'warn',
     'no-case-declarations': 'off',
     'no-confusing-arrow': 'error',
     'no-console': 'off',
@@ -62,7 +60,6 @@ module.exports = {
     'no-prototype-builtins': 'off',
     'no-return-assign': 'error',
     'no-self-compare': 'error',
-    'no-shadow': 'warn',
     'no-throw-literal': 'error',
     'no-trailing-spaces': 'error',
     'no-unneeded-ternary': 'error',

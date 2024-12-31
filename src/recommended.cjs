@@ -1,7 +1,7 @@
-import shared from './shared.mjs';
+const shared = require('./shared.cjs');
 
 /** @type {import('eslint').Linter.Config} */
-export default {
+module.exports = {
   ...shared,
   name: 'pk/recommended',
   rules: {

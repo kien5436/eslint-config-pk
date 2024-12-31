@@ -1,6 +1,6 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
+import globals from 'globals';
 
+import pk from './index.mjs';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -11,8 +11,8 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
-      }
-    }
+      },
+    },
   },
-  pluginJs.configs.recommended,
+  ...pk,
 ];

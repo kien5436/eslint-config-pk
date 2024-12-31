@@ -1,7 +1,7 @@
-import globals from 'globals';
+const globals = require('globals');
 
 /** @type {import('eslint').Linter.Config} */
-export default {
+module.exports = {
   languageOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',

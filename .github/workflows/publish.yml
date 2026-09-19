@@ -1,0 +1,81 @@
+name: Publish
+
+# Publishes to npm when a GitHub Release is published (tag) or when run manually.
+# Uses npm trusted publishing (OIDC) - no npm token secret is needed.
+# On npmjs.com configure: package -> Settings -> Trusted Publisher -> GitHub Actions,
+# owner `kien5436`, repository `eslint-config-pk`, workflow filename `publish.yml`.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: Pack and run npm publish --dry-run without uploading
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  # Required for npm provenance attestations.
+  id-token: write
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Test
+        run: pnpm test
+
+      - name: Check release tag matches package version
+        if: github.event_name == 'release'
+        run: |
+          set -eu
+          tag="${GITHUB_REF_NAME#v}"
+          version="$(node -p "require('./package.json').version")"
+          if [ "$tag" != "$version" ]; then
+            echo "::error::release tag '$GITHUB_REF_NAME' does not match package.json version '$version'"
+            exit 1
+          fi
+
+      - name: Use the latest npm (trusted publishing needs npm >= 11.5.1)
+        run: |
+          npm install -g npm@latest
+          node --version
+          npm --version
+
+      - name: Publish to npm
+        env:
+          DRY_RUN: ${{ inputs.dry-run }}
+        run: |
+          set -eu
+          args=(--access public --provenance --registry=https://registry.npmjs.org)
+          if [ "$DRY_RUN" = "true" ]; then
+            args+=(--dry-run)
+          fi
+          npm publish "${args[@]}"

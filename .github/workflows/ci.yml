@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: node ${{ matrix.node }} / eslint ${{ matrix.eslint }} / stylistic ${{ matrix.stylistic }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - node: 20
+            eslint: 9.39.5
+            stylistic: 2.13.0
+          - node: 20
+            eslint: 10.11.0
+            stylistic: 5.10.0
+          - node: 22
+            eslint: 9.39.5
+            stylistic: 5.10.0
+          - node: 22
+            eslint: 10.11.0
+            stylistic: 2.13.0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Pin eslint ${{ matrix.eslint }} and @stylistic/eslint-plugin ${{ matrix.stylistic }}
+        run: pnpm add -D eslint@${{ matrix.eslint }} @stylistic/eslint-plugin@${{ matrix.stylistic }}
+
+      - name: Show tool versions
+        run: pnpm exec eslint --version
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Test
+        run: pnpm test

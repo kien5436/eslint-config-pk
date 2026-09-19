@@ -7,8 +7,8 @@ import stylistic from './src/stylistic.mjs';
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   pluginJs.configs.recommended,
-  recommended,
-  strict,
+  ...recommended,
+  ...strict,
   stylistic,
 ];
 

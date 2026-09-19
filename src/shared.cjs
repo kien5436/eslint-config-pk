@@ -1,15 +1,33 @@
 const globals = require('globals');
 
+const sharedGlobals = {
+  ...globals.browser,
+  ...globals.node,
+};
+
+const linterOptions = { reportUnusedDisableDirectives: 'error' };
+
 /** @type {import('eslint').Linter.Config} */
-module.exports = {
+const moduleConfig = {
   languageOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    globals: {
-      ...globals.browser,
-      ...globals.node,
-    },
+    globals: sharedGlobals,
   },
-  linterOptions: { reportUnusedDisableDirectives: 'error' },
-  files: ['**/*.js', '**/*.cjs', '**/*.mjs', '**/*.ts'],
+  linterOptions,
+  files: ['**/*.js', '**/*.mjs', '**/*.ts'],
 };
+
+/** @type {import('eslint').Linter.Config} */
+const commonjsConfig = {
+  languageOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'commonjs',
+    globals: sharedGlobals,
+  },
+  linterOptions,
+  files: ['**/*.cjs'],
+};
+
+/** Shared base configs: ESM for `*.js`/`*.mjs`/`*.ts`, CommonJS for `*.cjs`. */
+module.exports = [moduleConfig, commonjsConfig];

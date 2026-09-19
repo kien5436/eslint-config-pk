@@ -7,8 +7,8 @@ const stylistic = require('./src/stylistic.cjs');
 module.exports = {
   all: [
     pluginJs.configs.recommended,
-    recommended,
-    strict,
+    ...recommended,
+    ...strict,
     stylistic,
   ],
   recommended,
